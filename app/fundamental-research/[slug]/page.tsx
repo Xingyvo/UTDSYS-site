@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import content from "@/lib/content";
-import { formatPct, formatPrice, upside } from "@/lib/research";
+import { formatDate, formatPct, formatPrice, upside } from "@/lib/research";
+import { eyebrow, pageTitle, sectionHeading, subHeading } from "@/lib/type";
 import { fetchQuote } from "@/lib/quotes";
 import RatingBadge from "@/components/research/RatingBadge";
 import CallTracker from "@/components/research/CallTracker";
 import Disclosures from "@/components/research/Disclosures";
 import ReportRecord from "@/components/research/ReportRecord";
+import JoinFooter from "@/components/research/JoinFooter";
 
 const { backLabel, reportHeading, reportPending, model, reports } =
   content.fundamentalResearch;
@@ -39,7 +41,7 @@ export default async function ReportPage({ params }: Props) {
       <div className="mx-auto max-w-7xl px-6 pb-28 pt-28 sm:pt-36">
         <Link
           href="/fundamental-research/reports"
-          className="group inline-flex items-center gap-2 font-mono text-[0.75rem] uppercase tracking-[0.08em] text-navy/50 transition hover:text-signal-deep"
+          className="group inline-flex items-center gap-1.5 text-[0.9375rem] font-medium text-navy/60 transition hover:text-signal-deep"
         >
           <span aria-hidden="true" className="transition group-hover:-translate-x-1">
             ←
@@ -50,9 +52,10 @@ export default async function ReportPage({ params }: Props) {
         {/* the call in one line; the full card lives on the index */}
         <header className="mt-6 flex flex-wrap items-end justify-between gap-8 border-b border-navy/12 pb-8">
           <div className="max-w-3xl">
-            <h1 className="font-display text-4xl font-semibold tracking-tight text-ink md:text-5xl">
-              {report.company}
-            </h1>
+            <p className={eyebrow}>
+              {report.exchange}: {report.ticker} · Published {formatDate(report.date)}
+            </p>
+            <h1 className={`${pageTitle} mt-4`}>{report.company}</h1>
             <p className="font-display mt-3 text-xl leading-snug tracking-tight text-signal-deep md:text-2xl">
               {report.headline}
             </p>
@@ -80,10 +83,7 @@ export default async function ReportPage({ params }: Props) {
         {/* the write-up itself */}
         <section aria-labelledby="full-report" className="mt-16">
           <div className="flex flex-wrap items-baseline justify-between gap-4">
-            <h2
-              id="full-report"
-              className="font-display text-2xl font-semibold tracking-tight text-ink"
-            >
+            <h2 id="full-report" className={sectionHeading}>
               {reportHeading}
             </h2>
             {report.pdf && (
@@ -91,7 +91,7 @@ export default async function ReportPage({ params }: Props) {
                 href={report.pdf}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-mono text-[0.75rem] uppercase tracking-[0.08em] text-signal-deep underline decoration-signal-deep/30 underline-offset-4 transition hover:decoration-signal-deep"
+                className="text-[0.9375rem] font-medium text-signal-deep underline decoration-signal-deep/30 underline-offset-4 transition hover:decoration-signal-deep"
               >
                 Open PDF ↗
               </a>
@@ -130,7 +130,7 @@ export default async function ReportPage({ params }: Props) {
               {/* the model's inputs and the two prices it blends, so the call reads without Excel */}
               <div className="grid border-t border-navy/10 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
                 <div className="p-6 sm:p-8">
-                  <h3 className="font-mono text-[0.75rem] uppercase tracking-[0.08em] text-navy/50">
+                  <h3 className={subHeading}>
                     {model.assumptionsHeading}
                   </h3>
                   <dl className="mt-5 grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-3">
@@ -143,7 +143,7 @@ export default async function ReportPage({ params }: Props) {
                   </dl>
                 </div>
                 <div className="border-t border-navy/10 bg-offwhite/70 p-6 sm:p-8 lg:border-l lg:border-t-0">
-                  <h3 className="font-mono text-[0.75rem] uppercase tracking-[0.08em] text-navy/50">
+                  <h3 className={subHeading}>
                     {model.methodsHeading}
                   </h3>
                   <dl className="mt-5 divide-y divide-navy/10 border-y border-navy/10 text-sm tabular-nums">
@@ -184,6 +184,7 @@ export default async function ReportPage({ params }: Props) {
 
         <ReportRecord report={report} />
 
+        <JoinFooter className="mt-24" />
         <Disclosures />
       </div>
     </main>

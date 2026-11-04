@@ -129,7 +129,9 @@ export default function CallTracker({
     : last === null
       ? 0
       : Math.min(1, Math.max(0, (last - call) / (target - call)));
-  const asOf = closed ? closed.t : (quote?.asOf ?? callT);
+  // The call's age comes from the calendar, so it stays right when the feed is down.
+  const [now] = useState(() => Date.now());
+  const asOf = closed ? closed.t : (quote?.asOf ?? now);
   const timeProgress = Math.min(1, Math.max(0, (asOf - callT) / (horizonEnd - callT)));
   const dayN = Math.max(0, Math.floor((asOf - callT) / DAY));
 
@@ -291,7 +293,10 @@ export default function CallTracker({
             {quote.open ? "Live" : "Market closed"}
           </span>
         ) : (
-          <span className="text-xs text-navy/40">Live price unavailable</span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-navy/15 px-3 py-1 text-xs font-medium text-navy/60">
+            <span className="h-2 w-2 rounded-full bg-navy/25" />
+            Prices temporarily unavailable
+          </span>
         )}
       </div>
 
@@ -516,7 +521,7 @@ export default function CallTracker({
 
         {!chart && width !== null && (
           <div className="flex h-full items-center justify-center text-sm text-navy/40">
-            {quote ? "Not enough data for this range" : "Waiting for the market feed"}
+            {quote ? "Not enough data for this range" : "Live prices are temporarily unavailable. The call's entry and target are shown above."}
           </div>
         )}
       </div>
@@ -560,7 +565,7 @@ export default function CallTracker({
         <Rail
           label="Price, call → target"
           value={priceProgress}
-          note={`${Math.round(priceProgress * 100)}% of the way`}
+          note={last === null && !closed ? "—" : `${Math.round(priceProgress * 100)}% of the way`}
           color={UP}
         />
         <Rail

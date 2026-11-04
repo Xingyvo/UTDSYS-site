@@ -1,5 +1,7 @@
 import Link from "next/link";
 import Button from "@/components/ui/Button";
+import JoinFooter from "@/components/research/JoinFooter";
+import { sectionHeading } from "@/lib/type";
 import RatingBadge from "@/components/research/RatingBadge";
 import ProcessExplorer from "@/components/research/ProcessExplorer";
 import content from "@/lib/content";
@@ -12,7 +14,7 @@ export const metadata = {
 };
 
 const { about, reports, methodology } = content.fundamentalResearch;
-const { hero, approach, coverage, process, latest, join } = about;
+const { hero, approach, coverage, process, latest } = about;
 
 // Small uppercase type is kept for the hero's eyebrow only; everything else
 // on the page reads as ordinary text.
@@ -25,9 +27,7 @@ function SectionTitle({ id, children, onDark = false }: { id: string; children: 
   return (
     <h2
       id={id}
-      className={`font-display scroll-mt-32 text-balance text-[1.75rem] font-semibold leading-tight tracking-[-0.01em] sm:text-[2rem] lg:pr-10 ${
-        onDark ? "text-white" : "text-ink"
-      }`}
+      className={`${onDark ? sectionHeading.replace("text-ink", "text-white") : sectionHeading} scroll-mt-32 lg:pr-10`}
     >
       {children}
     </h2>
@@ -219,11 +219,8 @@ export default function FundamentalAboutPage() {
           </section>
         )}
 
-        <footer className="flex flex-col gap-6 border-t border-navy/12 pt-10 sm:flex-row sm:items-center sm:justify-between">
-          <p className="font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">{join.text}</p>
-          <Button href={join.href} variant="primary">
-            {join.label}
-          </Button>
+        <footer>
+          <JoinFooter />
         </footer>
       </div>
     </main>

@@ -1,10 +1,11 @@
 import content, { type ResearchReport } from "@/lib/content";
 import { formatDate } from "@/lib/research";
+import { subHeading } from "@/lib/type";
 
 const { record } = content.fundamentalResearch;
 const members = content.team.members;
 
-const heading = "font-display text-lg font-semibold tracking-tight text-ink";
+const heading = subHeading;
 
 /**
  * The record kept under every report: who wrote it, and every change since

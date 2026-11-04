@@ -11,8 +11,8 @@ export default function ReportCard({ report }: { report: ResearchReport }) {
       className="group grid overflow-hidden rounded-sm border border-navy/12 bg-white/60 transition hover:border-navy/30 hover:shadow-[0_12px_40px_-20px_rgb(14_24_48/0.35)] lg:grid-cols-[1.6fr_1fr]"
     >
       <div className="flex flex-col p-6 sm:p-8 md:p-10">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-sm uppercase tracking-[0.08em] text-navy/70">
-          <span className="font-semibold text-ink">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-navy/60">
+          <span className="font-mono font-semibold tracking-[0.04em] text-ink">
             {report.exchange}: {report.ticker}
           </span>
           {report.sample && (
@@ -37,7 +37,7 @@ export default function ReportCard({ report }: { report: ResearchReport }) {
               {report.pdf ? "Full Report Available" : "Full Model Available"}
             </span>
           )}
-          <span className="ml-auto inline-flex items-center gap-2 font-mono text-[0.75rem] uppercase tracking-[0.08em] text-signal-deep">
+          <span className="ml-auto inline-flex items-center gap-1.5 text-[0.9375rem] font-medium text-signal-deep">
             Track the Call
             <span aria-hidden="true" className="transition group-hover:translate-x-1">
               →

@@ -5,6 +5,8 @@ import { fetchQuote } from "@/lib/quotes";
 import ReportExhibit from "@/components/research/ReportExhibit";
 import TrackRecordTable, { type TrackRow } from "@/components/research/TrackRecordTable";
 import Disclosures from "@/components/research/Disclosures";
+import JoinFooter from "@/components/research/JoinFooter";
+import { eyebrow, pageTitle, sectionHeading } from "@/lib/type";
 
 export const metadata = {
   title: "Published Research — UofT Decision Systems",
@@ -22,7 +24,6 @@ const {
   reports,
 } = content.fundamentalResearch;
 
-const label = "font-mono text-[0.75rem] uppercase tracking-[0.1em]";
 const monthYear = new Intl.DateTimeFormat("en-CA", { month: "short", year: "numeric", timeZone: "UTC" });
 
 /**
@@ -87,10 +88,10 @@ export default async function PublishedResearchPage() {
       <div className="mx-auto max-w-7xl px-6 pt-28 sm:pt-36">
         {/* masthead: what this is, and the record at a glance */}
         <header className="border-b border-navy/12 pb-10">
-          <p className={`${label} text-navy/50`}>Fundamental Research</p>
+          <p className={eyebrow}>Fundamental Research</p>
           <div className="mt-4">
             <div className="max-w-3xl">
-              <h1 className="font-display text-balance text-[clamp(2.5rem,5.5vw,4.25rem)] font-semibold leading-[0.98] tracking-[-0.015em] text-ink">
+              <h1 className={pageTitle}>
                 {heading}
               </h1>
               <p className="mt-5 text-lg leading-relaxed text-navy/70">{reportsIntro}</p>
@@ -124,11 +125,18 @@ export default async function PublishedResearchPage() {
         {/* the record: every call and how it has done since publication */}
         <section aria-labelledby="track-record" className="mt-24">
           <div className="flex flex-wrap items-baseline justify-between gap-4 pb-5">
-            <h2 id="track-record" className="font-display text-3xl font-semibold tracking-[-0.01em] text-ink">
+            <h2 id="track-record" className={sectionHeading}>
               {allHeading}
             </h2>
             <span className="text-sm text-navy/50">Select a column to sort.</span>
           </div>
+          {/* if the feed is down, say so rather than leave a column of dashes unexplained */}
+          {rows.length > 0 && rows.every((r) => r.current === null) && (
+            <p className="mb-4 rounded-sm border border-navy/12 bg-white px-4 py-3 text-sm text-navy/65">
+              Live prices are temporarily unavailable. Entry prices and targets are shown; returns will update when
+              prices are back.
+            </p>
+          )}
           <TrackRecordTable rows={rows} />
           <p className="mt-4 max-w-4xl text-xs leading-relaxed text-navy/50">{trackNote}</p>
         </section>
@@ -146,6 +154,7 @@ export default async function PublishedResearchPage() {
       </div>
 
       <div className="mx-auto max-w-7xl px-6 pb-28">
+        <JoinFooter className="mt-24" />
         <Disclosures />
       </div>
     </main>

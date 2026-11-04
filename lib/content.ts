@@ -184,7 +184,7 @@ const content = {
         title: "What We Do",
         body: "We pair bottom-up company research with a top-down view of the economy to find durable businesses the market has mispriced. We work alongside UTDSYS Quantitative Research: their screens surface ideas, and our work informs their models.",
         primary: { label: "View Published Research", href: "/fundamental-research/reports" },
-        secondary: { label: "Join the Team", href: "/get-involved" },
+        secondary: { label: "Get Involved", href: "/get-involved" },
         // public/fundamental-hero.jpg; swap the file to change the photo
         image: "/fundamental-hero.jpg",
       },
@@ -276,7 +276,7 @@ const content = {
       },
       join: {
         text: "Want to Research With Us?",
-        label: "Join the Team",
+        label: "Get Involved",
         href: "/get-involved",
       },
     },
